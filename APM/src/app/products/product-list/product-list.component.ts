@@ -39,9 +39,7 @@ export class ProductListComponent implements OnInit, OnDestroy {
     // TODO: Unsubscribe from this observable - unfeasible to store lots of subsciptions in their own variables - to be covered in pt8 - effects
     this.store.select('products').subscribe(
       products => {
-        if (products) {
-          this.displayCode = products.showProductCode;
-        }
+        this.displayCode = products.showProductCode;
       });
   }
 
