@@ -34,6 +34,14 @@ export class ProductListComponent implements OnInit, OnDestroy {
       next: (products: Product[]) => this.products = products,
       error: err => this.errorMessage = err
     });
+
+    // TODO: Unsubscribe from this observable - unfeasible to store lots of subsciptions in their own variables - to be covered in pt8 - effects
+    this.store.select('products').subscribe(
+      products => {
+        if (products) {
+          this.displayCode = products.showProductCode;
+        }
+      });
   }
 
   ngOnDestroy(): void {
