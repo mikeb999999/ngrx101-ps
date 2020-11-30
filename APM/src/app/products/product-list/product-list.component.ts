@@ -3,6 +3,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 
 import { Product } from '../product';
+import * as ProductActions from '../state/product.actions';
 import { ProductService } from '../product.service';
 import { Store } from '@ngrx/store';
 import { getShowProductCode, State } from '../state/product.reducer';
@@ -48,9 +49,9 @@ export class ProductListComponent implements OnInit, OnDestroy {
 
   checkChanged(): void {
     // this.displayCode = !this.displayCode;
-    // Now dispatching our action:
+    // Now dispatching our strongly-typed action:
     this.store.dispatch(
-      { type: '[Product] Toggle Product Code' }
+       ProductActions.toggleProductCode() 
     );
   }
 
@@ -58,8 +59,13 @@ export class ProductListComponent implements OnInit, OnDestroy {
     this.productService.changeSelectedProduct(this.productService.newProduct());
   }
 
-  productSelected(product: Product): void {
-    this.productService.changeSelectedProduct(product);
+  // An example with data
+  productSelected(product: Product): void{
+    this.store.dispatch(
+      ProductActions.setCurrentProduct(
+        {product}   // short for { product: product }
+      )
+    )
   }
 
 }
