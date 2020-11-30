@@ -16,6 +16,9 @@ import { PageNotFoundComponent } from './home/page-not-found.component';
 
 /* Feature Modules */
 import { UserModule } from './user/user.module';
+import { StoreModule } from '@ngrx/store';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { environment } from '../environments/environment';
 
 @NgModule({
   imports: [
@@ -23,7 +26,11 @@ import { UserModule } from './user/user.module';
     HttpClientModule,
     HttpClientInMemoryWebApiModule.forRoot(ProductData),
     UserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    StoreModule.forRoot({}, {}),
+    StoreDevtoolsModule.instrument({ name:'APM Demo App DevTools',
+    maxAge: 25, 
+    logOnly: environment.production })
   ],
   declarations: [
     AppComponent,
