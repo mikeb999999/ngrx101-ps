@@ -27,7 +27,7 @@ export const getShowProductCode = createSelector(
   state => state.showProductCode
 );
 
-export const getcurrentProduct = createSelector(
+export const getCurrentProduct = createSelector(
   getProductFeatureState,
   state => state.currentProduct
 );

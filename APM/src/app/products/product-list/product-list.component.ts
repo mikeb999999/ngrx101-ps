@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 import { Subscription } from 'rxjs';
 
@@ -6,14 +6,14 @@ import { Product } from '../product';
 import * as ProductActions from '../state/product.actions';
 import { ProductService } from '../product.service';
 import { Store } from '@ngrx/store';
-import { getShowProductCode, State } from '../state/product.reducer';
+import { getCurrentProduct, getShowProductCode, productReducer, State } from '../state/product.reducer';
 
 @Component({
   selector: 'pm-product-list',
   templateUrl: './product-list.component.html',
   styleUrls: ['./product-list.component.css']
 })
-export class ProductListComponent implements OnInit, OnDestroy {
+export class ProductListComponent implements OnInit {
   pageTitle = 'Products';
   errorMessage: string;
 
@@ -23,12 +23,15 @@ export class ProductListComponent implements OnInit, OnDestroy {
 
   // Used to highlight the selected product in the list
   selectedProduct: Product | null;
-  sub: Subscription;
+  // xx sub: Subscription;
 
   constructor(private store: Store<State>, private productService: ProductService) { }
 
   ngOnInit(): void {
-    this.sub = this.productService.selectedProductChanges$.subscribe(
+    // this.sub = this.productService.selectedProductChanges$.subscribe(
+
+    // TODO: Unsubscribe  
+    this.store.select(getCurrentProduct).subscribe(
       currentProduct => this.selectedProduct = currentProduct
     );
 
@@ -43,9 +46,9 @@ export class ProductListComponent implements OnInit, OnDestroy {
       );
   }
 
-  ngOnDestroy(): void {
-    this.sub.unsubscribe();
-  }
+  // ngOnDestroy(): void {
+  //   this.sub.unsubscribe();
+  // }
 
   checkChanged(): void {
     // this.displayCode = !this.displayCode;
@@ -56,16 +59,15 @@ export class ProductListComponent implements OnInit, OnDestroy {
   }
 
   newProduct(): void {
-    this.productService.changeSelectedProduct(this.productService.newProduct());
+   // this.productService.changeSelectedProduct(this.productService.newProduct());
+    this.store.dispatch(ProductActions.initialiseCurrentProduct())
   }
 
   // An example with data
   productSelected(product: Product): void{
     this.store.dispatch(
-      ProductActions.setCurrentProduct(
-        {product}   // short for { product: product }
-      )
-    )
+      ProductActions.setCurrentProduct( {product} )  // short for ( { product: product } )
+    );
   }
 
 }
