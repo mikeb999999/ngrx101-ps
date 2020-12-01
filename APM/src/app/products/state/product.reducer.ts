@@ -1,4 +1,4 @@
-import { createReducer, on, createAction, createFeatureSelector, createSelector } from '@ngrx/store';
+import { createReducer, on, createFeatureSelector, createSelector } from '@ngrx/store';
 import * as AppState from '../../state/app.state';
 
 import { Product } from '../product';
