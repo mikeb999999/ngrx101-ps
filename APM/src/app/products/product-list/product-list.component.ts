@@ -49,7 +49,7 @@ export class ProductListComponent implements OnInit {
   // An example with data
   productSelected(product: Product): void {
     this.store.dispatch(
-      ProductActions.setCurrentProduct({ product })
+      ProductActions.setCurrentProduct({ currentProductId: product.id })
     );
   }
 
